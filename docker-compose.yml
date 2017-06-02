@@ -18,7 +18,7 @@ services:
   web:
     build:
       context: .
-      dockerfile: app/Dockerfile
+      dockerfile: conf/app/Dockerfile
     image: thegeekfactory/mastodon
     restart: always
     env_file: .env.production
@@ -36,7 +36,7 @@ services:
   streaming:
     build:
       context: .
-      dockerfile: app/Dockerfile
+      dockerfile: conf/app/Dockerfile
     image: thegeekfactory/mastodon
     restart: always
     env_file: .env.production
@@ -50,7 +50,7 @@ services:
   sidekiq:
     build:
       context: .
-      dockerfile: app/Dockerfile
+      dockerfile: conf/app/Dockerfile
     image: thegeekfactory/mastodon
     restart: always
     env_file: .env.production
