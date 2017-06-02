@@ -3,14 +3,14 @@ services:
 
   db:
     restart: always
-    image: postgres:alpine
+    image: postgres:9.6-alpine
 ### Uncomment to enable DB persistance
 #    volumes:
 #      - ./postgres:/var/lib/postgresql/data
 
   redis:
     restart: always
-    image: redis:alpine
+    image: redis:3-alpine
 ### Uncomment to enable REDIS persistance
 #    volumes:
 #      - ./redis:/data
@@ -19,7 +19,7 @@ services:
     build:
       context: .
       dockerfile: app/Dockerfile
-    image: gargron/mastodon
+    image: thegeekfactory/mastodon
     restart: always
     env_file: .env.production
     command: bundle exec rails s -p 3000 -b '0.0.0.0'
@@ -37,7 +37,7 @@ services:
     build:
       context: .
       dockerfile: app/Dockerfile
-    image: gargron/mastodon
+    image: thegeekfactory/mastodon
     restart: always
     env_file: .env.production
     command: npm run start
@@ -51,7 +51,7 @@ services:
     build:
       context: .
       dockerfile: app/Dockerfile
-    image: gargron/mastodon
+    image: thegeekfactory/mastodon
     restart: always
     env_file: .env.production
     command: bundle exec sidekiq -q default -q mailers -q pull -q push
