@@ -1,7 +1,7 @@
 FROM ruby:2.4-alpine
 
-LABEL maintainer="https://github.com/tootsuite/mastodon" \
-      description="A GNU Social-compatible microblogging server"
+LABEL maintainer="https://github.com/thegeekfactory/mastodon-docker" \
+      description="Docker files for easier mastodon setup"
 
 ENV UID=991 GID=991 \
     RAILS_SERVE_STATIC_FILES=true \
