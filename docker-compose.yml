@@ -79,8 +79,8 @@ services:
     ports:
       - "8080:80"
     volumes: 
-      - /srv/mastodon/default.conf:/etc/nginx/conf.d/default.conf:z
-      - /srv/mastodon/git/public:/home/mastodon/live/public:z
+      - conf/nginx/default.conf:/etc/nginx/conf.d/default.conf:z
+      - mastodon/public:/home/mastodon/live/public:z
       - system:/home/mastodon/live/public/system:z
       - assets:/home/mastodon/live/public/assets:z
       - packs:/home/mastodon/live/public/packs:z
