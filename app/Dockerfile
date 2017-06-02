@@ -38,14 +38,15 @@ RUN echo "@edge https://nl.alpinelinux.org/alpine/edge/main" >> /etc/apk/reposit
  && update-ca-certificates \
  && rm -rf /tmp/* /var/cache/apk/*
 
-COPY Gemfile Gemfile.lock package.json yarn.lock /mastodon/
+COPY mastodon/Gemfile mastodon/Gemfile.lock mastodon/package.json \
+        mastodon/yarn.lock ./
 
 RUN bundle install --deployment --without test development \
  && yarn --ignore-optional --pure-lockfile
 
-COPY . /mastodon
+COPY mastodon/ .
 
-COPY docker_entrypoint.sh /usr/local/bin/run
+COPY mastodon/docker_entrypoint.sh /usr/local/bin/run
 
 RUN chmod +x /usr/local/bin/run
 
