@@ -12,37 +12,37 @@ EXPOSE 3000 4000
 WORKDIR /mastodon
 
 RUN echo "@edge https://nl.alpinelinux.org/alpine/edge/main" >> /etc/apk/repositories \
- && apk -U upgrade \
- && apk add -t build-dependencies \
-    build-base \
-    libxml2-dev \
-    libxslt-dev \
-    postgresql-dev \
-    protobuf-dev \
-    python \
- && apk add \
-    ca-certificates \
-    ffmpeg \
-    file \
-    git \
-    imagemagick@edge \
-    libpq \
-    libxml2 \
-    libxslt \
-    nodejs-npm@edge \
-    nodejs@edge \
-    protobuf \
-    su-exec \
-    tini \
- && npm install -g npm@3 && npm install -g yarn \
- && update-ca-certificates \
- && rm -rf /tmp/* /var/cache/apk/*
+    && apk -U upgrade \
+    && apk add -t build-dependencies \
+        build-base \
+        libxml2-dev \
+        libxslt-dev \
+        postgresql-dev \
+        protobuf-dev \
+        python \
+    && apk add \
+        ca-certificates \
+        ffmpeg \
+        file \
+        git \
+        imagemagick@edge \
+        libpq \
+        libxml2 \
+        libxslt \
+        nodejs-npm@edge \
+        nodejs@edge \
+        protobuf \
+        su-exec \
+        tini \
+    && npm install -g npm@3 && npm install -g yarn \
+    && update-ca-certificates \
+    && rm -rf /tmp/* /var/cache/apk/*
 
 COPY mastodon/Gemfile mastodon/Gemfile.lock mastodon/package.json \
         mastodon/yarn.lock ./
 
 RUN bundle install --deployment --without test development \
- && yarn --ignore-optional --pure-lockfile
+    && yarn --ignore-optional --pure-lockfile
 
 COPY mastodon/ .
 
