@@ -44,11 +44,9 @@ services:
   streaming:
     build:
       context: .
-      dockerfile: conf/app/Dockerfile
-    image: thegeekfactory/mastodon
+      dockerfile: conf/streaming/Dockerfile
     restart: always
     env_file: .env.production
-    command: npm run start
     expose:
       - "4000"
     depends_on:
