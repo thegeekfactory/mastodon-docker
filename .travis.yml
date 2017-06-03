@@ -1,0 +1,24 @@
+dist: trusty
+sudo: required
+
+language: node_js
+node_js:
+  - "6"
+env:
+  - REPO=thegeekfactory/mastodon-app DOCKERFILE_LOCATION=app
+  - REPO=thegeekfactory/mastodon-streaming DOCKERFILE_LOCATION=streaming
+
+services:
+  - docker
+script:
+  - export TAG=`if [ "$TRAVIS_BRANCH" == "master" ]; then echo "latest"; else echo $TRAVIS_BRANCH ; fi`
+  - docker build --file conf/$DOCKERFILE_LOCATION/Dockerfile --tag $REPO:$TAG .
+  - if [ -n "$TRAVIS_TAG" ]; then
+    docker tag $REPO:$TAG $REPO:$TRAVIS_TAG;
+    fi
+after_success:
+  - docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"
+  - docker push $REPO
+
+notifications:
+  email: false

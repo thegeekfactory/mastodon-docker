@@ -15,7 +15,7 @@ services:
     volumes:
       - db:/var/lib/postgresql/data:Z
     environment:
-      - POSTGRES_PASSWORD=CHANGEME
+      POSTGRES_PASSWORD: CHANGEME
 
   redis:
     restart: always
@@ -44,11 +44,9 @@ services:
   streaming:
     build:
       context: .
-      dockerfile: conf/app/Dockerfile
-    image: thegeekfactory/mastodon
+      dockerfile: conf/streaming/Dockerfile
     restart: always
     env_file: .env.production
-    command: npm run start
     expose:
       - "4000"
     depends_on:
@@ -78,7 +76,7 @@ services:
       - web
     ports:
       - "8080:80"
-    volumes: 
+    volumes:
       - ./conf/nginx/default.conf:/etc/nginx/conf.d/default.conf:z
       - ./mastodon/public:/home/mastodon/live/public:z
       - system:/home/mastodon/live/public/system:z
