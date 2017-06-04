@@ -10,7 +10,7 @@ ENV UID=991 GID=991 \
 EXPOSE 3000 4000
 
 RUN set -ex \
-    && echo "@v3.6 https://nl.alpinelinux.org/alpine/v3.6/main" >> /etc/apk/repositories \
+    && echo "@v3.6 https://dl-cdn.alpinelinux.org/alpine/v3.6/main" >> /etc/apk/repositories \
     && apk add --no-cache \
         ca-certificates \
         ffmpeg \
