@@ -10,18 +10,18 @@ ENV UID=991 GID=991 \
 EXPOSE 3000 4000
 
 RUN set -ex \
-    && echo "@edge https://nl.alpinelinux.org/alpine/edge/main" >> /etc/apk/repositories \
+    && echo "@v3.6 https://nl.alpinelinux.org/alpine/v3.6/main" >> /etc/apk/repositories \
     && apk add --no-cache \
         ca-certificates \
         ffmpeg \
         file \
         git \
-        imagemagick@edge \
+        imagemagick@v3.6 \
         libpq \
         libxml2 \
         libxslt \
-        nodejs-npm@edge \
-        nodejs@edge \
+        nodejs-npm@v3.6 \
+        nodejs@v3.6 \
         protobuf \
         su-exec \
         tini \
