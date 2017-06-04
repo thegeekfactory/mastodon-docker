@@ -43,15 +43,15 @@ RUN set -ex \
         yarn@community \
     && bundle install --clean --no-cache --deployment --without test development \
     && yarn install --ignore-optional --pure-lockfile \
-    && yarn cache clean
 
 COPY mastodon/ .
 
 RUN set -ex \
     && mkdir /mastodon/public/assets /mastodon/public/packs \
     && bundle exec rake SECRET_KEY_BASE=f0aee3707669309a42f6cca62064aea9af221400b6efe1f5afbf17d6d4024d07f22cfaa6bfbdb17ff11097db70eab018cefabe40eef995b9eb77b618472935bf assets:precompile \
-    && apk del --no-cache .build-dependencies \
+    && yarn cache clean \
     && apk del --no-cache yarn \
+    && apk del --no-cache .build-dependencies \
     && rm /root/.??* -fr
 
 COPY mastodon/docker_entrypoint.sh /usr/local/bin/run
