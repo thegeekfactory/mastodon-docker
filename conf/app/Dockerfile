@@ -42,7 +42,7 @@ RUN set -ex \
     && apk add --no-cache \
         yarn@community \
     && bundle install --clean --no-cache --deployment --without test development \
-    && yarn install --ignore-optional --pure-lockfile \
+    && yarn --ignore-optional --pure-lockfile \
 
 COPY mastodon/ .
 
