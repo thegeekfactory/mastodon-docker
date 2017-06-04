@@ -51,7 +51,9 @@ RUN set -ex \
     && apk del --no-cache build-dependencies \
     && apk del --no-cache \
         nodejs-npm \
-        nodejs
+        nodejs \
+    && yarn cache clean
+    && rm /root/.??* -fr
 
 COPY mastodon/docker_entrypoint.sh /usr/local/bin/run
 RUN chmod +x /usr/local/bin/run
