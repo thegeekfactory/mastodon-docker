@@ -41,14 +41,21 @@ RUN set -ex \
         protobuf-dev \
         python \
     && bundle install --clean --no-cache --deployment --without test development \
-    && yarn --ignore-optional --pure-lockfile \
-    && apk del --no-cache build-dependencies
+    && yarn --ignore-optional --pure-lockfile
 
 COPY mastodon/ .
+
+RUN set -ex \
+    && mkdir /mastodon/public/assets /mastodon/public/packs \
+    && bundle exec rake SECRET_KEY_BASE=f0aee3707669309a42f6cca62064aea9af221400b6efe1f5afbf17d6d4024d07f22cfaa6bfbdb17ff11097db70eab018cefabe40eef995b9eb77b618472935bf assets:precompile \
+    && apk del --no-cache build-dependencies \
+    && apk del --no-cache \
+        nodejs-npm \
+        nodejs
 
 COPY mastodon/docker_entrypoint.sh /usr/local/bin/run
 RUN chmod +x /usr/local/bin/run
 
-VOLUME /mastodon/public/system /mastodon/public/assets /mastodon/public/packs
+VOLUME /mastodon/public/system
 
 ENTRYPOINT ["/usr/local/bin/run"]

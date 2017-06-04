@@ -37,9 +37,9 @@ services:
       - db
       - redis
     volumes:
-      - assets:/mastodon/public/assets:z
+#      - assets:/mastodon/public/assets:z
       - system:/mastodon/public/system:z
-      - packs:/mastodon/public/packs:z
+#      - packs:/mastodon/public/packs:z
 
   streaming:
     build:
