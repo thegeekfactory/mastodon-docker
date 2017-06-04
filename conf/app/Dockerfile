@@ -20,39 +20,38 @@ RUN set -ex \
         libpq \
         libxml2 \
         libxslt \
-        nodejs-npm@v3.6 \
-        nodejs@v3.6 \
         protobuf \
         su-exec \
         tini \
-    && update-ca-certificates \
-    && npm install -g npm@3 && npm install -g yarn
+    && update-ca-certificates
 
 WORKDIR /mastodon
 COPY mastodon/Gemfile mastodon/Gemfile.lock mastodon/package.json \
         mastodon/yarn.lock ./
 
 RUN set -ex \
-    && apk add --no-cache -t build-dependencies \
+    && apk add --no-cache --virtual .build-dependencies \
         build-base \
         libxml2-dev \
         libxslt-dev \
+        nodejs \
         postgresql-dev \
         protobuf-dev \
         python \
+    && echo "@community https://dl-cdn.alpinelinux.org/alpine/v3.6/community" >> /etc/apk/repositories \
+    && apk add --no-cache \
+        yarn@community \
     && bundle install --clean --no-cache --deployment --without test development \
-    && yarn --ignore-optional --pure-lockfile
+    && yarn install --ignore-optional --pure-lockfile \
+    && yarn cache clean
 
 COPY mastodon/ .
 
 RUN set -ex \
     && mkdir /mastodon/public/assets /mastodon/public/packs \
     && bundle exec rake SECRET_KEY_BASE=f0aee3707669309a42f6cca62064aea9af221400b6efe1f5afbf17d6d4024d07f22cfaa6bfbdb17ff11097db70eab018cefabe40eef995b9eb77b618472935bf assets:precompile \
-    && yarn cache clean \
-    && apk del --no-cache build-dependencies \
-    && apk del --no-cache \
-        nodejs-npm \
-        nodejs \
+    && apk del --no-cache .build-dependencies \
+    && apk del --no-cache yarn \
     && rm /root/.??* -fr
 
 COPY mastodon/docker_entrypoint.sh /usr/local/bin/run
