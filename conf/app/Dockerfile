@@ -52,7 +52,8 @@ RUN set -ex \
     && yarn cache clean \
     && apk del --no-cache yarn \
     && apk del --no-cache .build-dependencies \
-    && rm /root/.??* -fr
+    && rm /root/.??* -fr \
+    && rm /mastodon/node_modules -fr
 
 COPY mastodon/docker_entrypoint.sh /usr/local/bin/run
 RUN chmod +x /usr/local/bin/run
