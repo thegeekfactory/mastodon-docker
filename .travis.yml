@@ -12,7 +12,7 @@ services:
   - docker
 script:
   - export TAG=`if [ "$TRAVIS_BRANCH" == "master" ]; then echo "latest"; else echo $TRAVIS_BRANCH ; fi`
-  - docker build --file conf/$DOCKERFILE_LOCATION/Dockerfile --tag $REPO:$TAG .
+  - docker build --squash --file conf/$DOCKERFILE_LOCATION/Dockerfile --tag $REPO:$TAG .
   - if [ -n "$TRAVIS_TAG" ]; then
     docker tag $REPO:$TAG $REPO:$TRAVIS_TAG;
     fi
